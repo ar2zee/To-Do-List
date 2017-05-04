@@ -11,6 +11,26 @@ document.getElementById('add').addEventListener('click', function() {
   }
 });
 
+
+ function removeItem() {
+   var item = this.parentNode.parentNode;
+   var parent = item.parentNode;
+
+   parent.removeChild(item);
+}
+
+function completeItem() {
+  var item = this.parentNode.parentNode;
+  var parent = item.parentNode;
+  var id = parent.id;
+
+  var target = (id === 'todo') ? document.getElementById('completed'): document.getElementById('todo');
+
+  parent.removeChild(item);
+  target.insertBefore(item, target.childNodes[0]);
+}
+
+// add a new items to our todo list
 function addItemTodo(text) {
   var list = document.getElementById('todo');
 
@@ -25,9 +45,15 @@ function addItemTodo(text) {
   remove.classList.add('remove');
   remove.innerHTML = removeSvg;
 
+  // Add click event for removing item
+  remove.addEventListener('click', removeItem);
+
   var complete = document.createElement('button');
   complete.classList.add('complete');
   complete.innerHTML = completeSvg;
+
+  // Add click event for Adding item
+  complete.addEventListener('click', completeItem);
 
   buttons.appendChild(remove);
   buttons.appendChild(complete);
